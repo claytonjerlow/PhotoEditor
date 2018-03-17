@@ -11,6 +11,7 @@ mainwind::mainwind(QWidget *_parent, const QString& path) :
     filepath(path)
 {
     parent = _parent;
+    save = nullptr; //initialize to null
     ui->setupUi(this);
 
     //don't display the brightness and sepia sliders until they are necessary
@@ -50,6 +51,7 @@ void mainwind::on_actionQuit_triggered()
 
 void mainwind::on_actionAbout_Photo_Editor_triggered()
 {
+    //make a string and show info about the project
     QString about_text;
     about_text = "Welcome to PhotoEditor.\n";
     about_text += "Developed By: Clayton Jerlow and Deborah Orret \n";  
@@ -67,22 +69,27 @@ void mainwind::on_actionAbout_Photo_Editor_triggered()
 
 void mainwind::on_actionFilters_3_triggered()
 {
+    //make the filter box visible
     ui->FilterWidget->show();
-
 }
 
 void mainwind::on_actionTools_triggered()
 {
+    //make the tool box visible
     ui->StickerWidget->show();
 }
 
+
+/*--------HISTORY--------*/
+
 void mainwind::on_actionUndo_triggered()
 {
-    if(history.size() > 1){
-        history.pop_back();
+    if(history.size() > 1){ //if there are enough image in our vector
+        history.pop_back(); //get rid of the last one
         delete currImg;
-        currImg = new Image(history[history.size()-1]);
+        currImg = new Image(history[history.size()-1]); //set our current Img to be the new last Image in the vector
     }
+    //update the image shown
     QPixmap pic;
     pic.convertFromImage(*currImg);
     ui->picture->setPixmap(pic);
@@ -90,20 +97,28 @@ void mainwind::on_actionUndo_triggered()
 
 void mainwind::on_actionRevert_triggered()
 {
+    //get rid of all history and restart with our current img as the base img
     history.clear();
     history.push_back(*baseImg);
     *currImg = *baseImg;
+    //update the image shown
     QPixmap pic;
     pic.convertFromImage(*currImg);
-    ui->picture->setPixmap(pic); //display currImg in the central widget
+    ui->picture->setPixmap(pic);
 }
+
+/*-------ROTATIONS--------*/
 
 void mainwind::on_actionRotateRight_triggered()
 {
+    //create and rotate an image,
     Image temp(*currImg);
     temp.rotateRight();
+    //add it to our vector
     history.push_back(temp);
+    //update the current image
     *currImg = temp;
+    //update the image shown
     QPixmap pic;
     pic.convertFromImage(*currImg);
     ui->picture->setPixmap(pic);
@@ -111,10 +126,14 @@ void mainwind::on_actionRotateRight_triggered()
 
 void mainwind::on_actionRotateLeft_triggered()
 {
+    //create and rotate an image
     Image temp(*currImg);
     temp.rotateLeft();
+    //add it to our vector
     history.push_back(temp);
+    //update the current image
     *currImg = temp;
+    //update the image shown
     QPixmap pic;
     pic.convertFromImage(*currImg);
     ui->picture->setPixmap(pic);
@@ -122,10 +141,14 @@ void mainwind::on_actionRotateLeft_triggered()
 
 void mainwind::on_actionFlip_2_triggered()
 {
+    //create and mirror an image
     Image temp(*currImg);
     temp.mirror();
+    //add it to our vector
     history.push_back(temp);
+    //update the current image
     *currImg = temp;
+    //update the image shown
     QPixmap pic;
     pic.convertFromImage(*currImg);
     ui->picture->setPixmap(pic);
@@ -133,10 +156,14 @@ void mainwind::on_actionFlip_2_triggered()
 
 void mainwind::on_actionRotate_180_triggered()
 {
+    //create and turn upside down an image
     Image temp(*currImg);
     temp.rotate180();
+    //add it to our vector
     history.push_back(temp);
+    //update the current image
     *currImg = temp;
+    //update the image shown
     QPixmap pic;
     pic.convertFromImage(*currImg);
     ui->picture->setPixmap(pic);
@@ -146,10 +173,14 @@ void mainwind::on_actionRotate_180_triggered()
 /* -----------FILTERS----------- */
 void mainwind::on_blackAndWhite_clicked()
 {
+    //create and turn black and white an image
     Image temp(*currImg);
     temp.blackAndWhite();
+    //add it to our vector
     history.push_back(temp);
+    //update the current image
     *currImg = temp;
+    //update the image shown
     QPixmap pic;
     pic.convertFromImage(*currImg);
     ui->picture->setPixmap(pic);
@@ -157,10 +188,14 @@ void mainwind::on_blackAndWhite_clicked()
 
 void mainwind::on_grayscale_clicked()
 {
+    //create and turn grayscale an image
     Image temp(*currImg);
     temp.grayscale();
+    //add it to our vector
     history.push_back(temp);
+    //update the current image
     *currImg = temp;
+    //update the image shown
     QPixmap pic;
     pic.convertFromImage(*currImg);
     ui->picture->setPixmap(pic);
@@ -168,10 +203,14 @@ void mainwind::on_grayscale_clicked()
 
 void mainwind::on_aqua_clicked()
 {
+    //create and turn blue an image
     Image temp(*currImg);
     temp.aqua();
+    //add it to our vector
     history.push_back(temp);
+    //update the current image
     *currImg = temp;
+    //update the image shown
     QPixmap pic;
     pic.convertFromImage(*currImg);
     ui->picture->setPixmap(pic);
@@ -179,10 +218,14 @@ void mainwind::on_aqua_clicked()
 
 void mainwind::on_rouge_clicked()
 {
+    //create and turn red an image
     Image temp(*currImg);
     temp.rouge();
+    //add it to our vector
     history.push_back(temp);
+    //update the current image
     *currImg = temp;
+    //update the image shown
     QPixmap pic;
     pic.convertFromImage(*currImg);
     ui->picture->setPixmap(pic);
@@ -190,10 +233,14 @@ void mainwind::on_rouge_clicked()
 
 void mainwind::on_veridian_clicked()
 {
+    //create and turn green an image
     Image temp(*currImg);
     temp.veridian();
+    //add it to our vector
     history.push_back(temp);
+    //update the current image
     *currImg = temp;
+    //update the image shown
     QPixmap pic;
     pic.convertFromImage(*currImg);
     ui->picture->setPixmap(pic);
@@ -201,10 +248,14 @@ void mainwind::on_veridian_clicked()
 
 void mainwind::on_negative_clicked()
 {
+    //create and invert and image
     Image temp(*currImg);
     temp.negative();
+    //add it to our vector
     history.push_back(temp);
+    //update the current image
     *currImg = temp;
+    //update the image shown
     QPixmap pic;
     pic.convertFromImage(*currImg);
     ui->picture->setPixmap(pic);
@@ -217,9 +268,10 @@ void mainwind::on_brightness_clicked()
 
 void mainwind::on_brightSlider_sliderMoved(int position)
 {
-    //use temp Image until user wants to commit changes
+    //create an image with brightness specified
     Image temp(*currImg);
     temp.brightness(position);
+    //show it
     QPixmap pic;
     pic.convertFromImage(temp);
     ui->picture->setPixmap(pic);
@@ -230,17 +282,21 @@ void mainwind::on_brightSave_clicked()
     //commit changes
     Image temp(*currImg);
     temp.brightness(ui->brightSlider->value());
+    //add the image to our vector
     history.push_back(temp);
     *currImg = temp;
     //return brightSlider to original state
     ui->brightSlider->setValue(0);
+    //hide it
     ui->brightnessWidget->hide();
 }
 
 void mainwind::on_sepia_clicked()
 {
+    //create and turn sepia an image
     Image temp(*currImg);
     temp.sepia(25, 25); //ensures filter is applied right after the click
+    //display it
     QPixmap pic;
     pic.convertFromImage(temp);
     ui->picture->setPixmap(pic);
@@ -252,6 +308,7 @@ void mainwind::on_depthSlider_sliderMoved(int position)
     Image temp(*currImg);
     //use slider value to apply sepia at certain depth
     temp.sepia(position, ui->intensitySlider->value());
+    //show it
     QPixmap pic;
     pic.convertFromImage(temp);
     ui->picture->setPixmap(pic); 
@@ -262,6 +319,7 @@ void mainwind::on_intensitySlider_sliderMoved(int position)
     Image temp(*currImg);
     //use slider value to apply sepia at certain intensity
     temp.sepia(ui->depthSlider->value(), position);
+    //show it
     QPixmap pic;
     pic.convertFromImage(temp);
     ui->picture->setPixmap(pic);    
@@ -272,31 +330,38 @@ void mainwind::on_sepiaSave_clicked()
     //commit changes
     Image temp(*currImg);
     temp.sepia(ui->depthSlider->value(), ui->intensitySlider->value());
+    //add the image to our vector
     history.push_back(temp);
     *currImg = temp;
 
     //set sliders to original states
     ui->depthSlider->setValue(25);
     ui->intensitySlider->setValue(25);
+    //hide the slider
     ui->sepiaWidget->hide();
 }
 
 void mainwind::on_actionNew_triggered()
 {
+    //show the welcome window and clean up the memory
     parent->show();
-    this->hide();
+    this->~mainwind();
 }
 
 void mainwind::on_actionSave_triggered()
 {
-    save = new savewind(this, currImg, filepath);
+    //display the save window
+    save = new savewind(this, currImg);
     save->show();
     save->setWindowTitle("Save!");
+    //hide the editing window while the save window is shown
     this->hide();
 }
 
 
 /* -----------TOOLBAR---------- */
+
+/*See the comments for these functions in the HISTORY and ROTATIONS sections*/
 
 void mainwind::on_flip_clicked()
 {

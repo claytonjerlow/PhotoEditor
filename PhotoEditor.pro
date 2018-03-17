@@ -3,6 +3,12 @@
 # Project created by QtCreator 2018-03-07T19:56:43
 # Authors: Clayton Jerlow and Deborah Orret
 #
+# Credit: Google Images for demo photo royce.jpg
+#         and for all photos used for buttons
+#
+#         Stackoverflow.come for the general idea behind sepia algorithm
+#         https://stackoverflow.com/questions/46535331/how-to-convert-image-to-sepia-in-java
+#
 #-------------------------------------------------
 
 QT       += core gui

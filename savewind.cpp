@@ -3,11 +3,10 @@
 #include <QDateTime>
 #include <QStandardPaths>
 
-savewind::savewind(QWidget *_parent, Image* _img, const QString& path) :
+savewind::savewind(QWidget *_parent, Image* _img) :
     QDialog(_parent),
     ui(new Ui::savewind),
-    img(_img),
-    filepath(path)
+    img(_img)
 {
     parent = _parent;
     ui->setupUi(this);
@@ -26,8 +25,9 @@ savewind::~savewind()
 
 void savewind::on_back_clicked()
 {
+    //go back to the editor and clean up memory
     parent->show();
-    this->hide();
+    this->~savewind();
 }
 
 void savewind::on_save_clicked()
